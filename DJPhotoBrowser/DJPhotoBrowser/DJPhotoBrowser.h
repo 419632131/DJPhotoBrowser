@@ -29,8 +29,8 @@
 @property (nonatomic, weak) UIView *sourceImagesContainerView; // 装载你的ImageVIews的View,如果是collectionView 直接 sourceImagesContainerView = collectionView
 @property (nonatomic, assign) NSInteger currentImageIndex;//点击的图片index
 @property (nonatomic, assign) NSInteger imageCount;//图片的数量
-
-@property (nonatomic, weak) id<DJPhotoBrowserDelegate> delegate;
+@property (nonatomic, copy) void (^dismissCallBack)();
+@property (nonatomic, assign) id<DJPhotoBrowserDelegate> delegate;
 
 - (void)show;
 

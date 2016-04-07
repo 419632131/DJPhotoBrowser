@@ -89,7 +89,6 @@
     browser.imageCount = self.models.count;
     browser.delegate = self;
     [browser show];
-    
 }
 
 - (NSURL *)photoBrowser:(DJPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
@@ -101,31 +100,41 @@
     }else{
         urlStr = model.images;
     }
+    
     return [NSURL URLWithString:urlStr];
 }
 
 - (UIImage *)photoBrowser:(DJPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
 {
     
-    CollectionViewCell *cell = (CollectionViewCell *)[self.collect cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    CGRect rect = [self.collect convertRect:cell.frame toView:self.view];
-    NSLog(@"rect = %@",NSStringFromCGRect(rect));
-    if (CGRectContainsPoint(self.view.bounds, rect.origin) == NO || (rect.origin.x == 5 && rect.origin.y == 5)) {
-        
-        UICollectionViewScrollPosition scrollPosition;
-        if (rect.origin.y < - 150) { // 这个值应该以每个item的高＋2*边距
-            scrollPosition = UICollectionViewScrollPositionBottom;
-        }else{
-            scrollPosition = UICollectionViewScrollPositionTop;
+    int newRow = index % 3;
+    __weak CollectionViewCell *cell = (CollectionViewCell *)[self.collect cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    if (newRow == 2) {
+        CGRect rect = [self.collect convertRect:cell.frame toView:self.view];
+        if (rect.origin.y <= 250) {
+            NSInteger row = index - 3;
+            if (row>=0) {
+                [self.collect scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+            }
         }
-        [self.collect scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:scrollPosition animated:YES];
+        if (rect.origin.y >= self.view.frame.size.height-250) {
+            NSInteger row = index + 1;
+            if (row < self.models.count) {
+                [self.collect scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
+            }
+        }
     }
+
     return cell.image.image;
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    if (self.isViewLoaded && !self.view.window)// 是否是正在使用的视图
+    {
+        self.view = nil;// 目的是再次进入时能够重新加载调用viewDidLoad函数。
+    }
 }
 
 @end

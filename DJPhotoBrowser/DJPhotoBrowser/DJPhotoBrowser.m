@@ -7,7 +7,7 @@
 //
 
 #import "DJPhotoBrowser.h"
-#import "UIImageView+WebCache.h"
+#import <UIImageView+WebCache.h>
 #import "DJBrowserImageView.h"
 
  
@@ -200,7 +200,9 @@
         self.backgroundColor = [UIColor clearColor];
         _indexLabel.alpha = 0.1;
     } completion:^(BOOL finished) {
-        
+        if (self.dismissCallBack) {
+            self.dismissCallBack();
+        }
         [self removeFromSuperview];
     }];
 }
@@ -322,7 +324,6 @@
 }
 
 #pragma mark - scrollview代理方法
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     int index = (scrollView.contentOffset.x + _scrollView.bounds.size.width * 0.5) / _scrollView.bounds.size.width;
@@ -340,8 +341,6 @@
             }];
         }
     }
-    
-    
     if (!_willDisappear) {
         _indexLabel.text = [NSString stringWithFormat:@"%d/%ld", index + 1, (long)self.imageCount];
     }

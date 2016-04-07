@@ -7,7 +7,7 @@
 //
 
 #import "DJBrowserImageView.h"
-#import "UIImageView+WebCache.h"
+#import <UIImageView+WebCache.h>
 #import "DJPhotoBrowserConfig.h"
 
 @implementation DJBrowserImageView
@@ -20,7 +20,10 @@
     UIImageView *_zoomingImageView;
     CGFloat _totalScale;
 }
-
+- (void)dealloc
+{
+    self.image = nil;
+}
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -88,6 +91,9 @@
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
 {
+//    if (self.isloading) {
+//        return;
+//    }
     DJWaitingView *waiting = [[DJWaitingView alloc] init];
     waiting.bounds = CGRectMake(0, 0, 100, 100);
     waiting.mode = DJWaitingViewProgressMode;
@@ -96,14 +102,12 @@
     
     
     __weak DJBrowserImageView *imageViewWeak = self;
-
+    
     [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         imageViewWeak.progress = (CGFloat)receivedSize / expectedSize;
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [imageViewWeak removeWaitingView];
-        
-        
         if (error) {
             UILabel *label = [[UILabel alloc] init];
             label.bounds = CGRectMake(0, 0, 160, 30);
@@ -117,8 +121,7 @@
             label.textAlignment = NSTextAlignmentCenter;
             [imageViewWeak addSubview:label];
         } else {
-            _scrollImageView.image = image;
-            [_scrollImageView setNeedsDisplay];
+            
         }
    
     }];
