@@ -96,7 +96,7 @@
 {
     ImageModel *model = self.models[index];
     NSString *urlStr;
-    if (model.image.length>0) {
+    if (model.image.length > 0) {
         urlStr = model.image;
     }else{
         urlStr = model.images;

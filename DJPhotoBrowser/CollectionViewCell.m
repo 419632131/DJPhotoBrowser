@@ -22,10 +22,10 @@
 - (void)setModel:(ImageModel *)model
 {
     _model = model;
-    if (_model.images == nil) {
-        [_image sd_setImageWithURL:[NSURL URLWithString:_model.image] placeholderImage:[UIImage imageNamed:@"place"]];
-    }else{
+    if (_model.images.length > 0) {
         [_image sd_setImageWithURL:[NSURL URLWithString:_model.images] placeholderImage:[UIImage imageNamed:@"place"]];
+    }else{
+        [_image sd_setImageWithURL:[NSURL URLWithString:_model.image] placeholderImage:[UIImage imageNamed:@"place"]];
     }
 }
 @end
