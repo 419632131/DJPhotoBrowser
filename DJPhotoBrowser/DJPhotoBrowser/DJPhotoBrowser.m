@@ -38,12 +38,7 @@
 }
 
 
-- (void)didMoveToSuperview
-{
-    [self setupScrollView];
-    
-    [self setupToolbars];
-}
+
 
 - (void)dealloc
 {
@@ -258,6 +253,8 @@
 
 - (void)show
 {
+    [self setupScrollView];
+    [self setupToolbars];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     self.frame = window.bounds;
     [window addObserver:self forKeyPath:@"frame" options:0 context:nil];
