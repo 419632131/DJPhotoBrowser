@@ -26,7 +26,7 @@
 
 @interface DJPhotoBrowser : UIView <UIScrollViewDelegate>
 
-@property (nonatomic, weak) UIView *sourceImagesContainerView; // 装载你的ImageVIews的View,如果是collectionView 直接 sourceImagesContainerView = collectionView
+@property (nonatomic, weak) UIView *sourceImagesContainerView; // 装载你的ImageViews的View,如果是collectionView 直接 sourceImagesContainerView = collectionView
 @property (nonatomic, assign) NSInteger currentImageIndex;//点击的图片index
 @property (nonatomic, assign) NSInteger imageCount;//图片的数量
 @property (nonatomic, copy) void (^dismissCallBack)();

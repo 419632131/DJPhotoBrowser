@@ -91,6 +91,7 @@
     [browser show];
 }
 
+
 - (NSURL *)photoBrowser:(DJPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
 {
     ImageModel *model = self.models[index];
