@@ -13,6 +13,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.image = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
+        
+        self.image.contentMode = UIViewContentModeScaleAspectFill;
         self.image.layer.cornerRadius = _image.frame.size.height/10;
         self.image.layer.masksToBounds = YES;
         [self.contentView addSubview:_image];
