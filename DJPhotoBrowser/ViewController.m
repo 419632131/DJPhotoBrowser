@@ -41,9 +41,11 @@
     NSArray *datas = [[NSArray alloc] initWithContentsOfFile:path];
     for (NSDictionary *dic in datas) {
         ImageModel *model = [ImageModel new];
+        
         [model setValuesForKeysWithDictionary:dic];
         [self.models addObject:model];
     }
+    
 }
 
 - (void)initUI
@@ -92,18 +94,18 @@
 }
 
 
-- (NSURL *)photoBrowser:(DJPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
-{
-    ImageModel *model = self.models[index];
-    NSString *urlStr;
-    if (model.image.length > 0) {
-        urlStr = model.image;
-    }else{
-        urlStr = model.images;
-    }
-    
-    return [NSURL URLWithString:urlStr];
-}
+//- (NSURL *)photoBrowser:(DJPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
+//{
+//    ImageModel *model = self.models[index];
+//    NSString *urlStr;
+//    if (model.image.length > 0) {
+//        urlStr = model.image;
+//    }else{
+//        urlStr = model.images;
+//    }
+//    
+//    return [NSURL URLWithString:urlStr];
+//}
 
 - (UIImage *)photoBrowser:(DJPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
 {

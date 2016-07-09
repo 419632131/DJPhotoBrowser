@@ -134,6 +134,15 @@
     CGFloat temp = _totalScale + (scale - 1);
     [self setTotalScale:temp];
     recognizer.scale = 1.0;
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        if (temp < 1.0) {
+            [UIView animateWithDuration:0.5 animations:^{
+                [self zoomWithScale:1.0];
+            } completion:^(BOOL finished) {
+                
+            }];
+        }
+    }
 }
 
 - (void)setTotalScale:(CGFloat)totalScale
@@ -187,6 +196,7 @@
         _zoomingScroolView = [[UIScrollView alloc] initWithFrame:self.bounds];
         _zoomingScroolView.backgroundColor = DJPhotoBrowserBackgrounColor;
         _zoomingScroolView.contentSize = self.bounds.size;
+//        _zoomingImageView.contentMode = UIViewContentModeScaleAspectFit;
         UIImageView *zoomingImageView = [[UIImageView alloc] initWithImage:self.image];
         CGSize imageSize = zoomingImageView.image.size;
         CGFloat imageViewH = self.bounds.size.height;
@@ -195,7 +205,7 @@
         }
         zoomingImageView.bounds = CGRectMake(0, 0, self.bounds.size.width, imageViewH);
         zoomingImageView.center = _zoomingScroolView.center;
-        zoomingImageView.contentMode = UIViewContentModeScaleAspectFit;
+//        zoomingImageView.contentMode = UIViewContentModeScaleAspectFit;
         _zoomingImageView = zoomingImageView;
         [_zoomingScroolView addSubview:zoomingImageView];
         [self addSubview:_zoomingScroolView];
