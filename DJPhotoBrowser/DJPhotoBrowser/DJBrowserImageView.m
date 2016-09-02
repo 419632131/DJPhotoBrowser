@@ -101,7 +101,7 @@
     [self addSubview:waiting];
     
     
-    __weak DJBrowserImageView *imageViewWeak = self;
+    __weak typeof(self) imageViewWeak = self;
     
     [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         imageViewWeak.progress = (CGFloat)receivedSize / expectedSize;
