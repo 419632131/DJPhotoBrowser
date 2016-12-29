@@ -34,7 +34,7 @@
     
     [self initUI];
 }
-
+//获取json数据
 - (void)getDateSoure
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
